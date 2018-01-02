@@ -5,4 +5,4 @@ Important points for data science track
    - 2. Model Algorithms
       - 1. K-means
       - 2. KNN
-   - 3.Coding
+   - 3. Coding
