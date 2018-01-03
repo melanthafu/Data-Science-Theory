@@ -1,1 +1,35 @@
-https://zhuanlan.zhihu.com/p/30482640
+Let the data matrix XX be of n×pn×p size, where nn is the number of samples and pp is the number of variables. Let us assume that it is centered, i.e. column means have been subtracted and are now equal to zero.
+
+Then the p×pp×p covariance matrix CC is given by C=X⊤X/(n−1)C=X⊤X/(n−1). It is a symmetric matrix and so it can be diagonalized:
+C=VLV⊤,
+C=VLV⊤,
+where VV is a matrix of eigenvectors (each column is an eigenvector) and LL is a diagonal matrix with eigenvalues λiλi in the decreasing order on the diagonal. The eigenvectors are called principal axes or principal directions of the data. Projections of the data on the principal axes are called principal components, also known as PC scores; these can be seen as new, transformed, variables. The jj-th principal component is given by jj-th column of XVXV. The coordinates of the ii-th data point in the new PC space are given by the ii-th row of XVXV.
+
+If we now perform singular value decomposition of XX, we obtain a decomposition
+X=USV⊤,
+X=USV⊤,
+where SS is the diagonal matrix of singular values sisi. From here one can easily see that
+C=VSU⊤USV⊤/(n−1)=VS2n−1V⊤,
+C=VSU⊤USV⊤/(n−1)=VS2n−1V⊤,
+meaning that right singular vectors VV are principal directions and that singular values are related to the eigenvalues of covariance matrix via λi=s2i/(n−1)λi=si2/(n−1). Principal components are given by XV=USV⊤V=USXV=USV⊤V=US.
+
+To summarize:
+
+If X=USV⊤X=USV⊤, then columns of VV are principal directions/axes.
+Columns of USUS are principal components ("scores").
+Singular values are related to the eigenvalues of covariance matrix via λi=s2i/(n−1)λi=si2/(n−1). Eigenvalues λiλi show variances of the respective PCs.
+Standardized scores are given by columns of n−1−−−−−√Un−1U and loadings are given by columns of VS/n−1−−−−−√VS/n−1. See e.g. here and here for why "loadings" should not be confused with principal directions.
+The above is correct only if XX is centered. Only then is covariance matrix equal to X⊤X/(n−1)X⊤X/(n−1).
+The above is correct only for XX having samples in rows and variables in columns. If variables are in rows and samples in columns, then UU and VV exchange interpretations.
+If one wants to perform PCA on a correlation matrix (instead of a covariance matrix), then columns of XX should not only be centered, but standardized as well, i.e. divided by their standard deviations.
+To reduce the dimensionality of the data from pp to k<pk<p, select kk first columns of UU, and k×kk×k upper-left part of SS. Their product UkSkUkSk is the required n×kn×k matrix containing first kk PCs.
+Further multiplying the first kk PCs by the corresponding principal axes V⊤kVk⊤ yields Xk=UkSkV⊤kXk=Uk⊤Sk⊤Vk⊤ matrix that has the original n×pn×p size but is of lower rank (of rank kk). This matrix XkXk provides a reconstruction of the original data from the first kk PCs. It has the lowest possible reconstruction error, see my answer here.
+Strictly speaking, UU is of n×nn×n size and VV is of p×pp×p size. However, if n>pn>p then the last n−pn−p columns of UU will be zeros; one should therefore use an "economy size" (or "thin") SVD that returns UU of n×pn×p size, dropping the zero columns. For large n≫pn≫p the matrix UU would otherwise be unnecessarily huge. The same applies for an opposite situation of n≪pn≪p.
+
+Reference Links:
+  - 1. Relationship between SVD and PCA. How to use SVD to perform PCA https://stats.stackexchange.com/questions/134282/relationship-between-svd-and-pca-how-to-use-svd-to-perform-pca
+  - 2. What is the intuitive relationship between SVD and PCA -- a very popular and very similar thread on math.SE. https://math.stackexchange.com/questions/3869/what-is-the-intuitive-relationship-between-svd-and-pca
+  - 3. Why PCA of data by means of SVD of the data? -- a discussion of what are the benefits of performing PCA via SVD [short answer: numerical stability]. https://stats.stackexchange.com/questions/79043/why-pca-of-data-by-means-of-svd-of-the-data
+  - 4. PCA and Correspondence analysis in their relation to Biplot -- PCA in the context of some congeneric techniques, all based on SVD. https://stats.stackexchange.com/questions/141754/pca-and-correspondence-analysis-in-their-relation-to-biplot
+  - 5. Is there any advantage of SVD over PCA? -- a question asking if there any benefits in using SVD instead of PCA [short answer: ill-posed question]. https://stats.stackexchange.com/questions/121162/is-there-any-advantage-of-svd-over-pca
+  - 6. Making sense of principal component analysis, eigenvectors & eigenvalues -- non-technical explanation of PCA. https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues/140579#140579
