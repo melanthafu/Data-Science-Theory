@@ -6,3 +6,5 @@ Important points for data science track
       - 1. K-means
       - 2. KNN
    - 3. Coding
+   - 4. Scipy Sparse Matrix
+   - 5. PCA & SVD
