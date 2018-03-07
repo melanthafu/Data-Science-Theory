@@ -8,6 +8,6 @@ Important points for data science track
    3. Coding
    4. Scipy Sparse Matrix
    5. PCA & SVD
-   6. NN
+   6. NN
    http://pytorch.org/tutorials/beginner/pytorch_with_examples.html#warm-up-numpy
    https://www.zhihu.com/question/62482926
